@@ -1,5 +1,5 @@
 import numpy as np
-from bessetti_erskine import gaussian_field, uniform_field
+from bassetti_erskine import gaussian_field, uniform_field
 
 def beam_pipe_field(x, y, beam_pos_x, beam_pos_y,
                     regular_field, pipe_radius,
