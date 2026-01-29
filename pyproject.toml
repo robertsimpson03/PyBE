@@ -6,12 +6,12 @@ build-backend = "setuptools.build_meta"
 name = "PyBE"
 version = "0.1.0"
 description = "Electric field calculations for Gaussian and Uniform elliptical distributions"
-readme = "README.md"
+#readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
     "numpy>=1.20.0",
     "scipy>=1.7.0",
 ]
 
-[tool.setuptools.packages.find]
-where = ["src"]
+#[tool.setuptools.packages.find]
+#where = ["src"]
