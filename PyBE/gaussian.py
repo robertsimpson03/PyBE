@@ -68,8 +68,8 @@ def _bassetti_erskine(x, y, sigma_x, sigma_y):
     denom = 1 / np.sqrt(2 * (sigma_x**2-sigma_y**2))
     s1 = z * denom
     s2 = omega * denom
-    prefactor = -2j*np.sqrt(np.pi) * denom
+    prefactor = 2j*np.sqrt(np.pi) * denom
 
     field = prefactor * (np.exp(-xi_sqrd/2)*wofz(s2) - wofz(s1))
 
-    return field.real, field.imag
+    return field.real, -field.imag
