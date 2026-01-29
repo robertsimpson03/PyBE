@@ -5,7 +5,34 @@ from scipy.special import wofz
 
 TOLERANCE = 1e-14
 def get_field(x, y, sigma_x, sigma_y):
-    if False:#abs(sigma_x - sigma_y) < TOLERANCE:
+    """
+        Evaluate the electric field from a 2D Gaussian charge distribution.
+
+        Evaluate the electric field from a 2D Gaussian charge distribution
+        using the circular analytical or Bassetti-Erskine semi-analytical
+        formula.
+
+        Parameters
+        ----------
+        x : float or array_like
+            x-coordinates to evaluate field at.
+        y : float or array_like
+            y-coordinates to evaluate field at.
+        sigma_x : float
+            Gaussian width in the x direction.
+        sigma_y : float
+            Gaussian width in the y direction.
+
+        Returns
+        -------
+        Ex : ndarray
+            x-component of the electric field.
+        Ey : ndarray
+            y-component of the electric field.
+
+    """
+
+    if abs(sigma_x - sigma_y) < TOLERANCE:
         E_x, E_y = _circular(x, y, sigma_x)
     else:
         if sigma_x > sigma_y:
@@ -26,10 +53,10 @@ def _circular(x, y, sigma):
     return x * common, y * common
 
 def _elliptical(x, y, sigma_x, sigma_y):
-    y_sym = abs(y)
-    E_x, E_y_sym = _bassetti_erskine(x, y_sym, sigma_x, sigma_y)
-    E_y = np.where(y <= 0, E_y_sym, -E_y_sym)
-
+    E_x, E_y = _bassetti_erskine(x, abs(y), sigma_x, sigma_y)
+    #E_y *= np.where(y <= 0, 1, -1)
+    mask = y < 0
+    E_y[mask] *= -1
     return E_x, E_y
 
 
@@ -41,7 +68,7 @@ def _bassetti_erskine(x, y, sigma_x, sigma_y):
     denom = 1 / np.sqrt(2 * (sigma_x**2-sigma_y**2))
     s1 = z * denom
     s2 = omega * denom
-    prefactor = 2j*np.sqrt(np.pi) * denom
+    prefactor = -2j*np.sqrt(np.pi) * denom
 
     field = prefactor * (np.exp(-xi_sqrd/2)*wofz(s2) - wofz(s1))
 
