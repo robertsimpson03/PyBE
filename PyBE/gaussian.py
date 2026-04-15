@@ -44,7 +44,7 @@ def get_field(x, y, sx, sy):
 
 def _circular(x, y, sigma):
     r_squared = x**2 + y**2
-    charge_enclosed = - np.expm1(-r_squared/sigma**2)
+    charge_enclosed = - np.expm1(-r_squared/(2*sigma**2))
 
     common = 2 * np.divide(charge_enclosed, r_squared,
                            np.zeros_like(r_squared), where=r_squared != 0)
